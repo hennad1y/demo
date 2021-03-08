@@ -1,0 +1,24 @@
+nav {
+  display: flex;
+  justify-content: center;
+
+  ul {
+    min-width: 450px;
+    position: relative;
+    justify-content: center;
+
+    li {
+      &:first-child {
+        position: absolute;
+        left: 0;
+        margin-right: 30px;
+      }
+
+      &:last-child {
+        position: absolute;
+        right: 0;
+        margin-left: 30px;
+      }
+    }
+  }
+}
