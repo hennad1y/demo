@@ -16,8 +16,7 @@ export default {
   name: "TodoSearch",
   data() {
     return {
-      search: "",
-      page: 1
+      search: ""
     };
   },
   created() {
@@ -30,7 +29,7 @@ export default {
   methods: {
     changeSearch({ target: { value } }) {
       value
-        ? this.$router.push({ query: { page: this.page, search: value } })
+        ? this.$router.push({ query: { page: 1, search: value } })
         : this.$router.push({ query: { page: undefined, search: undefined } });
     }
   }

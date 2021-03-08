@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="allPages.length > 1">
+  <nav v-if="pages.length > 1">
     <ul class="pagination">
       <li
         class="page-item"
@@ -12,8 +12,8 @@
       </li>
       <li
         class="page-item"
-        v-for="page in allPages"
-        :key="page"
+        v-for="(page, index) in pages"
+        :key="index"
         :class="dynamicClasses(page)"
         @click="setPage(page)"
       >
@@ -41,8 +41,8 @@ export default {
   name: "TodoPagination",
   data() {
     return {
-      pages: 1,
-      allPages: [],
+      pages: [],
+      allPages: 1,
       currentPage: 1,
       position: 2
     };
@@ -58,27 +58,23 @@ export default {
 
     isDisabledNext() {
       return {
-        disabled: this.currentPage === this.pages
+        disabled: this.currentPage === this.allPages
       };
     }
   },
   methods: {
     dynamicClasses(page) {
-      const build = {};
-
       if (page === "...") {
-        build.disabled = true;
+        return { disabled: true };
       }
 
       if (this.currentPage === +page) {
-        build.active = true;
+        return { active: true };
       }
-
-      return build;
     },
 
     setPage(page) {
-      if (1 > page || page > this.pages || page === "...") return;
+      if (1 > page || page > this.allPages || page === "...") return;
 
       const { query } = this.$route;
       this.$router.push({ query: { ...query, page } });
@@ -114,9 +110,9 @@ export default {
     getPagination() {
       const { allPages, currentPage } = this.getPagination;
 
-      this.pages = allPages;
+      this.allPages = allPages;
       this.currentPage = +currentPage;
-      this.allPages = this.buildPages(allPages);
+      this.pages = this.buildPages(allPages);
     }
   }
 };
