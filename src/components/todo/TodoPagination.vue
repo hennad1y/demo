@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="pages.length > 1">
+  <nav v-if="pages.length > 1 && allPages >= currentPage">
     <ul class="pagination">
       <li
         class="page-item"
@@ -12,6 +12,15 @@
       </li>
       <li
         class="page-item"
+        :class="isDisabledNext"
+        @click="setPage(currentPage + 1)"
+      >
+        <a class="page-link" href="#" aria-label="Next" @click.prevent="">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      <li
+        class="page-item"
         v-for="(page, index) in pages"
         :key="index"
         :class="dynamicClasses(page)"
@@ -19,15 +28,6 @@
       >
         <a class="page-link" href="#" @click.prevent="">
           {{ page }}
-        </a>
-      </li>
-      <li
-        class="page-item"
-        :class="isDisabledNext"
-        @click="setPage(currentPage + 1)"
-      >
-        <a class="page-link" href="#" aria-label="Next" @click.prevent="">
-          <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
     </ul>
