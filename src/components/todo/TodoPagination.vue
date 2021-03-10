@@ -1,5 +1,8 @@
 <template>
-  <nav v-if="pages.length > 1 && allPages >= currentPage">
+  <nav
+    class="todo-pagination"
+    v-if="pages.length > 1 && allPages >= currentPage"
+  >
     <ul class="pagination">
       <li
         class="page-item"

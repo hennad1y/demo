@@ -1,0 +1,18 @@
+.todo-item {
+  .card {
+    height: 100%;
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+
+      p {
+        flex-grow: 1;
+      }
+
+      a {
+        align-self: flex-start;
+      }
+    }
+  }
+}

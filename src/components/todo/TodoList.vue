@@ -23,13 +23,14 @@ export default {
   data() {
     return {
       todos: [],
-      limit: 8,
+      limit: 6,
       page: 1,
-      search: ""
+      search: "",
+      category: ""
     };
   },
   async created() {
-    await this.fetchTodos();
+    await this.fetchTodos({ categories: this.getCategories });
 
     const { query } = this.$route;
     this.handleURL(query);
@@ -37,7 +38,8 @@ export default {
     this.setTodos();
   },
   computed: {
-    ...mapGetters("todos", ["getTodos", "getPendingTodos", "getErrorTodos"])
+    ...mapGetters("todos", ["getTodos", "getPendingTodos", "getErrorTodos"]),
+    ...mapGetters("tools", ["getCategories"])
   },
   methods: {
     ...mapActions("todos", ["fetchTodos"]),
@@ -49,6 +51,17 @@ export default {
         todos = todos.filter(
           todo =>
             todo.title.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+        );
+      }
+
+      if (this.category) {
+        const categories = this.category.split(",");
+
+        todos = todos.filter(todo =>
+          categories.find(
+            category =>
+              todo.category.toLowerCase().indexOf(category.toLowerCase()) > -1
+          )
         );
       }
 
@@ -73,9 +86,14 @@ export default {
       if (query?.page) {
         this.page = query.page;
       }
+
+      if (query?.category) {
+        this.category = query.category;
+      }
     },
 
     resetParamsURL() {
+      this.category = "";
       this.search = "";
       this.page = 1;
     }

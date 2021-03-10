@@ -1,6 +1,7 @@
 <template>
-  <div class="col-3 mb-2">
+  <div class="todo-item col-12 col-md-6 col-xl-4 mb-2">
     <div class="card">
+      <div class="card-header">#{{ todo.category }}</div>
       <div class="card-body">
         <h5 class="card-title">{{ todo.title }}</h5>
         <p class="card-text">{{ todo.body }}</p>

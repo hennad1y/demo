@@ -1,0 +1,13 @@
+.todo-categories {
+  .selected {
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .card {
+    .list-group-item {
+      cursor: pointer;
+    }
+  }
+}

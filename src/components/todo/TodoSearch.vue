@@ -28,9 +28,13 @@ export default {
   },
   methods: {
     changeSearch({ target: { value } }) {
+      const { query } = this.$route;
+
       value
-        ? this.$router.push({ query: { page: 1, search: value } })
-        : this.$router.push({ query: { page: undefined, search: undefined } });
+        ? this.$router.push({ query: { ...query, page: 1, search: value } })
+        : this.$router.push({
+            query: { ...query, page: undefined, search: undefined }
+          });
     }
   }
 };
