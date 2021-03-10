@@ -50,6 +50,9 @@ export default {
       position: 2
     };
   },
+  created() {
+    this.initPagination();
+  },
   computed: {
     ...mapGetters("tools", ["getPagination"]),
 
@@ -107,15 +110,19 @@ export default {
         .join()
         .replace(/\.[.,]+(?!\.)/g, "...,")
         .split(",");
-    }
-  },
-  watch: {
-    getPagination() {
+    },
+
+    initPagination() {
       const { allPages, currentPage } = this.getPagination;
 
       this.allPages = allPages;
       this.currentPage = +currentPage;
       this.pages = this.buildPages(allPages);
+    }
+  },
+  watch: {
+    getPagination() {
+      this.initPagination();
     }
   }
 };

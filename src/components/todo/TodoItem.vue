@@ -1,6 +1,6 @@
 <template>
-  <div class="todo-item col-12 col-md-6 col-xl-4 mb-2">
-    <div class="card">
+  <div :class="buildClass">
+    <div v-if="todo" class="card">
       <div class="card-header">#{{ todo.category }}</div>
       <div class="card-body">
         <h5 class="card-title">{{ todo.title }}</h5>
@@ -10,6 +10,7 @@
         </router-link>
       </div>
     </div>
+    <slot v-else name="customCard" />
   </div>
 </template>
 
@@ -19,7 +20,18 @@ export default {
   props: {
     todo: {
       type: Object,
-      required: true
+      default: () => undefined
+    }
+  },
+  computed: {
+    buildClass() {
+      return {
+        "todo-item": true,
+        "col-12": true,
+        "col-md-6": this.todo,
+        "col-xl-4": this.todo,
+        "mb-2": true
+      };
     }
   }
 };

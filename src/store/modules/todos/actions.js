@@ -3,6 +3,7 @@ import { API_URL, ERROR_MESSAGE } from "@/config";
 const actions = {
   async fetchTodos({ commit }, { categories = null }) {
     commit("setPendingTodos", { status: true });
+    commit("setErrorTodos", { message: "" });
 
     try {
       let todos = await fetch(`${API_URL}/posts`).then(res => {
@@ -33,6 +34,7 @@ const actions = {
 
   async fetchTodoById({ commit }, { todoId }) {
     commit("setPendingTodos", { status: true });
+    commit("setErrorTodos", { message: "" });
 
     try {
       return await fetch(`${API_URL}/posts/${todoId}`).then(res => {

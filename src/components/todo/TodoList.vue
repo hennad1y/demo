@@ -30,11 +30,14 @@ export default {
     };
   },
   async created() {
-    await this.fetchTodos({ categories: this.getCategories });
+    if (!this.getTodos.length) {
+      await this.fetchTodos({ categories: this.getCategories });
+    }
 
     const { query } = this.$route;
-    this.handleURL(query);
 
+    this.resetParamsURL();
+    this.handleURL(query);
     this.setTodos();
   },
   computed: {
@@ -99,7 +102,9 @@ export default {
     }
   },
   watch: {
-    $route({ query }) {
+    $route({ name, query }) {
+      if (name !== "Home") return;
+
       this.resetParamsURL();
       this.handleURL(query);
       this.setTodos();

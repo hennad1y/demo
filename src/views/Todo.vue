@@ -1,15 +1,30 @@
 <template>
   <div class="page">
     <Loading v-if="getPendingTodos" :status="getPendingTodos"></Loading>
-    <Error v-if="getErrorTodos" :message="getErrorTodos"></Error>
-    <template v-if="todo">
-      <router-link to="/">Back</router-link>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ todo.title }}</h5>
-          <p class="card-text">{{ todo.body }}</p>
-        </div>
-      </div>
+    <Error v-else-if="getErrorTodos" :message="getErrorTodos"></Error>
+    <template v-else>
+      <template v-if="todo">
+        <a href="#" @click.prevent="$router.go(-1)" class="d-flex mt-2 mb-3"
+          >Back</a
+        >
+        <TodoItem :custom-card="true">
+          <template v-slot:customCard>
+            <div class="row">
+              <div class="card col-12">
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">#{{ todo.category }}</li>
+                  </ul>
+                  <h5 class="card-title">{{ todo.title }}</h5>
+                  <p class="card-text">{{ todo.body }}</p>
+                  <a href="#" class="card-link">Edit</a>
+                </div>
+              </div>
+            </div>
+          </template>
+        </TodoItem>
+      </template>
+      <div v-else>Not Found</div>
     </template>
   </div>
 </template>
@@ -18,10 +33,11 @@
 import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/global/Loading";
 import Error from "@/components/global/Error";
+import TodoItem from "@/components/todo/TodoItem";
 
 export default {
   name: "Todo",
-  components: { Error, Loading },
+  components: { TodoItem, Error, Loading },
   data() {
     return {
       todo: null
@@ -35,14 +51,27 @@ export default {
     }
 
     if (!this.todo) {
-      this.todo = await this.fetchTodoById({ todoId });
+      const todo = await this.fetchTodoById({ todoId });
+      todo.category = this.setCategory();
+      this.todo = todo;
     }
   },
   computed: {
-    ...mapGetters("todos", ["getTodos", "getPendingTodos", "getErrorTodos"])
+    ...mapGetters("todos", ["getTodos", "getPendingTodos", "getErrorTodos"]),
+    ...mapGetters("tools", ["getCategories"])
   },
   methods: {
-    ...mapActions("todos", ["fetchTodoById"])
+    ...mapActions("todos", ["fetchTodoById"]),
+
+    setCategory() {
+      return this.getCategories[
+        this.getRandomArbitrary(0, this.getCategories.length - 1)
+      ];
+    },
+
+    getRandomArbitrary(min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    }
   }
 };
 </script>
