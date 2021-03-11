@@ -17,12 +17,18 @@
                   </ul>
                   <h5 class="card-title">{{ todo.title }}</h5>
                   <p class="card-text">{{ todo.body }}</p>
-                  <a href="#" class="card-link">Edit</a>
+                  <a
+                    href="#"
+                    class="card-link"
+                    @click.prevent="toggleModal({ status: true })"
+                    >Edit</a
+                  >
                 </div>
               </div>
             </div>
           </template>
         </TodoItem>
+        <TodoModal :show-modal="showModal" @closeModal="closeModal" />
       </template>
       <div v-else>Not Found</div>
     </template>
@@ -34,13 +40,15 @@ import { mapGetters, mapActions } from "vuex";
 import Loading from "@/components/global/Loading";
 import Error from "@/components/global/Error";
 import TodoItem from "@/components/todo/TodoItem";
+import TodoModal from "@/components/todo/TodoModal";
 
 export default {
   name: "Todo",
-  components: { TodoItem, Error, Loading },
+  components: { TodoModal, TodoItem, Error, Loading },
   data() {
     return {
-      todo: null
+      todo: null,
+      showModal: false
     };
   },
   async created() {
@@ -71,6 +79,14 @@ export default {
 
     getRandomArbitrary(min, max) {
       return Math.round(Math.random() * (max - min) + min);
+    },
+
+    toggleModal({ status }) {
+      this.showModal = status;
+    },
+
+    closeModal() {
+      this.toggleModal({ status: false });
     }
   }
 };
