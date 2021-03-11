@@ -3,12 +3,14 @@
     <h4>Categories</h4>
     <div v-if="selected.length" class="mb-3 selected">
       <div
-        class="badge badge-dark text-wrap mr-1"
+        class="badge bg-dark text-wrap mr-1"
         v-for="(category, index) in selected"
         :key="index"
       >
         {{ category }}
-        <span class="badge badge-light" @click="setCategory(category)">X</span>
+        <span class="badge bg-light text-dark" @click="setCategory(category)"
+          >X</span
+        >
       </div>
     </div>
     <div class="card">
