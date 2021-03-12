@@ -32,6 +32,10 @@ const actions = {
     }
   },
 
+  refreshTodos({ commit }, { todos }) {
+    commit("setTodos", { todos });
+  },
+
   async fetchTodoById({ commit }, { todoId }) {
     commit("setPendingTodos", { status: true });
     commit("setErrorTodos", { message: "" });

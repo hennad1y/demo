@@ -1,0 +1,22 @@
+.todo-modal {
+  .btn-close {
+    border: none;
+  }
+
+  textarea {
+    min-height: 150px;
+    resize: none;
+  }
+
+  .form-check {
+    label {
+      cursor: pointer;
+    }
+
+    label {
+      &:first-letter {
+        text-transform: capitalize;
+      }
+    }
+  }
+}

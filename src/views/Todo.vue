@@ -28,7 +28,14 @@
             </div>
           </template>
         </TodoItem>
-        <TodoModal :show-modal="showModal" @closeModal="closeModal" />
+        <TodoModal
+          v-if="showModal"
+          :show-modal="showModal"
+          @toggleModal="toggleModal"
+          @newTodo="newTodo"
+          :todo="todo"
+          modal-title="Edit Todo"
+        />
       </template>
       <div v-else>Not Found</div>
     </template>
@@ -69,7 +76,7 @@ export default {
     ...mapGetters("tools", ["getCategories"])
   },
   methods: {
-    ...mapActions("todos", ["fetchTodoById"]),
+    ...mapActions("todos", ["fetchTodoById", "refreshTodos"]),
 
     setCategory() {
       return this.getCategories[
@@ -85,7 +92,18 @@ export default {
       this.showModal = status;
     },
 
-    closeModal() {
+    newTodo({ newTodo }) {
+      if (this.getTodos.length) {
+        const todos = this.getTodos.map(todo => {
+          if (todo.id === newTodo.id) return newTodo;
+          return todo;
+        });
+
+        this.refreshTodos({ todos });
+      }
+
+      this.todo = newTodo;
+
       this.toggleModal({ status: false });
     }
   }
