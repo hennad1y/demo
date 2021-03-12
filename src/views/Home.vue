@@ -6,7 +6,9 @@
         <TodoCategories />
       </div>
       <div class="col-12 col-md-8 col-xl-9">
-        <TodoPagination />
+        <div class="page-top">
+          <TodoPagination />
+        </div>
         <TodoList />
       </div>
     </div>

@@ -1,4 +1,8 @@
 .todo-pagination {
+  .pagination {
+    margin: 0;
+  }
+
   ul {
     li {
       &:nth-child(1) {
