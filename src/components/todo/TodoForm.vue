@@ -97,7 +97,7 @@ export default {
       const { title, body, category } = this;
       const newTodo = { ...this.copyTodo, title, body, category };
 
-      // there should be a request ("put")
+      // there should be a request ("put" or "post")
 
       // if error -> show message error
 
